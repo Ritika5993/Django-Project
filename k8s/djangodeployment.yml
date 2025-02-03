@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: django
-          image: ritika5993/djangoapp:latest
+          image: ritika5993/djangoapp:${{ github.sha }} 
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
