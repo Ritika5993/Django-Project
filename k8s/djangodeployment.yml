@@ -15,5 +15,6 @@ spec:
       containers:
         - name: django
           image: ritika5993/djangoapp:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8000
