@@ -11,10 +11,13 @@ spec:
     metadata:
       labels:
         app: django
+      annotations:
+        rollme: "time-{{now | unixEpoch}}"  # This forces Kubernetes to restart the deployment
     spec:
       containers:
         - name: django
-          image: ritika5993/djangoapp:${{ github.sha }} 
+          image: ritika5993/djangoapp:${{ github.sha }}  # Ensure this tag is unique (commit SHA)
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
+
