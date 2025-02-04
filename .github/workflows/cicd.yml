@@ -20,8 +20,10 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t ritika5993/djangoapp:latest .
-          docker push ritika5993/djangoapp:latest
+         IMAGE_TAG=${{ github.sha }}
+         docker build -t ritika5993/djangoapp:$IMAGE_TAG .
+         docker push ritika5993/djangoapp:$IMAGE_TAG
+
 
       - name: Configure AWS CLI
         run: |
@@ -35,3 +37,6 @@ jobs:
       - name: Deploy to Kubernetes
         run: |
           kubectl apply -f k8s/
+          kubectl rollout restart deployment django-deployment -n default
+
+
