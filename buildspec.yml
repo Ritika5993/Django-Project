@@ -1,0 +1,16 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Docker Hub...
+      - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
+  build:
+    commands:
+      - echo Building the Docker image...
+      - docker build -t ritika5993/djangoapp:$CODEBUILD_RESOLVED_SOURCE_VERSION .
+      - docker push ritika5993/djangoapp:$CODEBUILD_RESOLVED_SOURCE_VERSION
+  post_build:
+    commands:
+      - echo Updating Kubernetes deployment...
+      - kubectl set image deployment/django-deployment django=ritika5993/djangoapp:$CODEBUILD_RESOLVED_SOURCE_VERSION

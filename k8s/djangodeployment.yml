@@ -11,9 +11,12 @@ spec:
     metadata:
       labels:
         app: django
+      annotations:
+        rollme: "time-{{now | unixEpoch}}"
     spec:
       containers:
         - name: django
-          image: ritika5993/djangoapp:latest
+          image: ritika5993/djangoapp:$CODEBUILD_RESOLVED_SOURCE_VERSION
+          imagePullPolicy: Always
           ports:
             - containerPort: 8000
